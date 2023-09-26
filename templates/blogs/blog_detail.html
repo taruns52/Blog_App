@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<!-- Display Blog Details -->
+
+<div class="blog-detail">
+  <h1><center>{{ object.title }}</center></h1>
+  <div class="blog-detail-content">{{ object.content}}</div>
+
+  <div class="blog-detail-content">
+    {{object.author.username}}
+    <p>Posted on - {{object.created}}</p>
+  </div>
+</div>
+
+{% endblock content %}
