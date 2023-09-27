@@ -40,18 +40,14 @@ class LoginView(View):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            print("form", request.POST)
             user = authenticate(
                 username=form.cleaned_data["username"],
                 password=form.cleaned_data["password"],
             )
-            print(user)
             if user is not None:
                 login(request, user)
-                print("Login Success")
                 return redirect("home")
         message = "Login failed!"
-        print("Login failed!")
         return render(
             request, self.template_name, context={"form": form, "message": message}
         )
@@ -60,7 +56,6 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        print("User Logout Success")
         return redirect(settings.LOGIN_URL)
 
 
@@ -70,7 +65,6 @@ class AuthorList(ListView):
 
     def get_queryset(self):
         queryset = MyAuthor.objects.all()[::-1]
-        print("\n\n\n\n", queryset)
         return queryset
 
 
