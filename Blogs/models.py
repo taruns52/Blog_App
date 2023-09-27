@@ -8,7 +8,7 @@ from Author.models import MyAuthor
 
 class Blog(models.Model):
     author = models.ForeignKey(MyAuthor, on_delete=models.CASCADE)
-    title = models.CharField("Title", max_length=200)
+    title = models.CharField(max_length=200)
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
 
