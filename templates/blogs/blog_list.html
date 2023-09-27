@@ -1,0 +1,49 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<!-- Iterate over object_list -->
+{% for Blog in Blogs %}
+<!-- Display Blogs -->
+
+<div class="blog-card">
+  <p class="blog-title">
+    <a href="{% url 'blog-detail' Blog.pk %}"> {{ Blog.title }}</a>
+  </p>
+  <p class="blog-content">{{ Blog.content|truncatechars:500 }}</p>
+  <p>
+    Created by:
+    <b
+      ><a href="{% url 'author-detail' Blog.author.pk %}"
+        >{{Blog.author.username}}</a
+      ></b
+    >
+  </p>
+  <p>Created on : {{Blog.created}}</p>
+</div>
+
+<!-- If Blog_list is empty  -->
+{% empty %}
+<p>No Blogs yet.</p>
+{% endfor %}
+
+<!-- Pagination  -->
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+    <a href="?page=1">&laquo; first</a>
+    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">next</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+
+{% endblock content %}

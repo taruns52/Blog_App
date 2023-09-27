@@ -1,0 +1,61 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<!-- Display Blog Details -->
+
+<div class="blog-detail">
+  <h1><center>{{ object.title }}</center></h1>
+  <div class="blog-detail-content">{{ object.content}}</div>
+
+  <div class="blog-detail-content">
+    {{object.author.username}}
+    <p>Posted on - {{object.created}}</p>
+  </div>
+
+  {% if user.is_authenticated %}
+  <h2 class="blog-detail-content">Leave a Comment</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table style="margin-left: 50px; margin-top: 0; align-items: center">
+      {% for field in form %}
+      <tr>
+        <td>{{field}} <span>{{ field.errors }}</span></td>
+      </tr>
+
+      {% endfor %}
+    </table>
+    <input type="submit" value="Comment" />
+  </form>
+  {% endif %}
+
+  <!-- Iterate over Comments -->
+  <h3>Comments Posted</h3>
+  <p class="blog-detail-content">
+    {{count}} comment{{count | pluralize}} posted.
+  </p>
+  {% for comment in comments %}
+  <!-- Display Comments -->
+
+  <div class="blog-card">
+    <p class="blog-content">{{ comment.comment }}</p>
+    <p>
+      Created by:
+      <b
+        ><a href="{% url 'author-detail' comment.author.pk %}"
+          >{{comment.author.username}}</a
+        ></b
+      >
+    </p>
+    <p>Commented on : {{comment.commented_on}}</p>
+  </div>
+
+  <!-- If No comments for given blog available  -->
+  {% empty %}
+  <p>No Comments yet.</p>
+  {% endfor %}
+</div>
+
+{% endblock content %}
