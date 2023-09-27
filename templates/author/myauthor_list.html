@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% load static %} 
+
+{% block content %}
+<div id="author_Container">
+  <!-- Iterate over Author List -->
+
+  {% for Author in Authors %}
+  <!-- Display Author -->
+  <div class="author-card">
+    <div class="author-img">
+      <a href="{% url 'author-detail' Author.pk %}">
+        <img
+          src="{{Author.profile_pic.url}}"
+          alt="{{Author.profile_pic}}"
+          width="30%"
+          height="30%"
+        />
+      </a>
+    </div>
+
+    <div class="author-content">
+      <h3>
+        <a href="{% url 'author-detail' Author.pk %}"
+          >{{Author.get_full_name}}
+        </a>
+      </h3>
+      <p>Bio :{{Author.bio | truncatechars:50}}</p>
+      <p>Contact : {{Author.phone_no}}</p>
+    </div>
+  </div>
+
+  <!-- If Author_list is empty  -->
+  {% empty %}
+  <p>No Authers yet.</p>
+  {% endfor %}
+</div>
+
+{% endblock content %}

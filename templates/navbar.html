@@ -1,0 +1,15 @@
+{% load static %}
+
+<ul>
+  <li><a class="active" href="{% url 'home'%}">Home</a></li>
+  <li><a href="{% url 'home'%}">Blogs</a></li>
+  <li><a href="{% url 'authors'%}">Authors</a></li>
+
+  {% if user.is_authenticated %}
+  <li class="li-right"><a href="{% url 'logout'%}">Logout</a></li>
+  <li class="li-right"><a>Welcome, {{user}}</a></li>
+  {% else %}
+  <li class="li-right"><a href="{% url 'register'%}">Register</a></li>
+  <li class="li-right"><a href="{% url 'login'%}">Login</a></li>
+  {% endif %}
+</ul>
