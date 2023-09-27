@@ -28,8 +28,27 @@ class BlogList(ListView):
     paginate_by = 5
 
 
-class BlogDetail(DetailView):
+class BlogDetailView(UpdateView):
+    form_class = CommentCreateForm
     model = Blog
+    template_name = "blogs/blog_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogDetailView, self).get_context_data(**kwargs)
+        context["form"] = CommentCreateForm
+        comments = Comment.objects.filter(blog=self.kwargs["pk"])
+        context["comments"] = comments
+        context["count"] = comments.count()
+        return context
+
+    def form_valid(self, form):
+        comment = form.cleaned_data.get("comment")
+        new_comment, created = Comment.objects.get_or_create(
+            author=self.request.user,
+            blog=Blog.objects.get(pk=self.kwargs["pk"]),
+            comment=comment,
+        )
+        return super(BlogDetailView, self).form_valid(form)
 
 
 class MyBlogList(ListView):
