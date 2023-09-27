@@ -12,12 +12,10 @@ def user_directory_path(instance, filename):
 class MyAuthor(AbstractUser):
     bio = models.CharField(
         max_length=100,
-        verbose_name="Add Bio to let Users know about you",
         default="I'm passionate about using my financial expertise to help people reach their financial goals.",
     )
     address = models.CharField(
         max_length=100,
-        verbose_name="Add Your Office Address",
         default="Aranyani, Shop No. Sf 204, 2Nd Floor, Vr Surat, Rundh Village, Dumas Road, Magdalla, Surat, Gujarat",
     )
     phone_no = models.CharField(
