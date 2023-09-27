@@ -21,7 +21,7 @@ class YourTestClass(TestCase):
                 author=author,
                 title=f"My Blog {blog_id}",
             )
-#  git commit -m "Added Testcases for Blog App"         
+       
     def test_all_blog_page_accessiblity(self):
         blog = self.client.get("/")
         self.assertEqual(blog.status_code, 200)
