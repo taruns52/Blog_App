@@ -1,13 +1,21 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import MyAuthor
+from django.contrib.auth.forms import UserChangeForm
+from .models import MyAuthor, Blog
+
+
+class BlogInline(admin.TabularInline):
+    model = Blog
+
+    def has_change_permission(self, request, obj):
+        return False
 
 
 class MyAuthorAdmin(UserAdmin):
+    inlines = [
+        BlogInline,
+    ]
     form = UserChangeForm
     fieldsets = (
         (
